@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="endpoint.js"></script>
+	
+	<script>
+	 function buildHtmlTable(myList) {
+
+  var columns = ["id", "quantity","Remove from cart"];
+     for (var i = 0 ; i < myList.length ; i++) {
+         var row$ = $('<tr/>');
+         for (var colIndex = 0 ; colIndex < 2 ; colIndex++) {
+             var cellValue = myList[i][columns[colIndex]];
+ 
+             if (cellValue == null) { cellValue = ""; }
+ 
+             row$.append($('<td/>').html(JSON.stringify(cellValue)));
+         }
+		 var cellValue = myList[i][columns[0]];
+		 row$.append($('<td/>').html([createRemoveButton(cellValue), createRemoveNumber(cellValue)]));
+		 
+         $("#excelDataTable").append(row$);
+     }
+ }
+ 
+ function createRemoveButton(val) {
+    return $('<button/>', {
+        text: 'Remove product',
+        id: 'btn_remove',
+		value: val,
+        click: ClickRemove
+    });
+}
+
+ function createRemoveNumber(val) {
+    return $('<input type="number" />').attr({
+    name: 'Remove',
+	min: '1',
+	id: 'removeNum'+val
+})
+}
+
+
+function ClickRemove() {
+	    $.ajax
+    ({ 
+        url: endpoint+'/cart',
+        data: {
+			"productId": this.value,
+			"quantity": $("#removeNum"+this.value).val()
+			},
+        type: 'delete',
+        success: function(result)
+        {
+           alert("Removed!");
+		   setTimeout(function(){ location.reload(); }, 1000);
+        }
+    });
+}
+ 
+	
+	
+	
+	            $.getJSON(endpoint+"/cart")
+                .done(function(products) {
+					buildHtmlTable(products);
+                });
+	</script>
+	
+	    <script type="text/javascript">
+        $("document").ready(function() {
+            $("#checkout").click(checkout);
+        });
+        
+        function checkout() {
+            $.ajax({ 
+        url: endpoint+'/checkout',
+        data: {
+			"promocode": $("#promocode").val(),
+			"email": $("#email").val()
+			},
+        type: 'post',
+        success: function(result)
+        {
+           alert("Checkout Completed!");
+		   setTimeout(function(){ location.reload(); }, 1000);
+        },
+		error: function (request, status, error) { // error callback 
+			alert("Error: " + JSON.parse(request.responseText).message);
+		}
+    });
+        }
+        
+    </script>
+</head>
+<body>
+
+
+
+    <section class="section">
+        <div class="container">
+            <div class="text-content">
+			 <div id="ajaxContent">
+					<h2 class="headline">Cart Information</h2>
+					<table id="excelDataTable" border="1">
+					  <tr>
+						<th>id</th>
+						<th>Quantity</th>
+						<th>Actions</th>
+					  </tr>
+					</table>
+				</div>
+				
+				<p><label for="promocode">Promocode:</label> <input type="text" id="promocode" name="promocode"></p>
+				<p><label for="email">Email:</label> <input type="text" id="email" name="email"></p>
+				<p> <button id="checkout">Checkout</button></p>	
+				
+				 <p><a href="catalog.html" target="_blank">Go to catalog</a> </p>
+            </div>
+        </div>
+        <!-- container text -->
+    </section>
+    <!-- #productData -->
+
+    
+</body>
+</html>

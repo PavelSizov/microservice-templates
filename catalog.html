@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="endpoint.js"></script>
+	
+	<script>
+	 function buildHtmlTable(myList) {
+
+  var columns = ["id", "name", "price", "properties","Add to cart"];
+     for (var i = 0 ; i < myList.length ; i++) {
+         var row$ = $('<tr/>');
+         for (var colIndex = 0 ; colIndex < 4 ; colIndex++) {
+             var cellValue = myList[i][columns[colIndex]];
+ 
+             if (cellValue == null) { cellValue = ""; }
+ 
+             row$.append($('<td/>').html(JSON.stringify(cellValue)));
+         }
+		 var cellValue = myList[i][columns[0]];
+		 row$.append($('<td/>').html(createAddButton(cellValue)));
+		 row$.append($('<td/>').html(createAddNumber(cellValue)));
+		 
+         $("#excelDataTable").append(row$);
+     }
+ }
+ 
+ function createAddButton(val) {
+    return $('<button/>', {
+        text: 'Add product',
+        id: 'btn_add',
+		value: val,
+        click: ClickAdd
+    });
+}
+
+ function createAddNumber(val) {
+    return $('<input type="number" />').attr({
+    name: 'test',
+	min: '1',
+	max: '10',
+	id: 'addNum'+val
+})
+}
+
+
+function ClickAdd() {
+    <!-- alert(this.value+"::"+$("#addNum"+this.value).val()); -->
+	
+	    $.ajax
+    ({ 
+        url: endpoint+'/cart',
+        data: {
+			"productId": this.value,
+			"quantity": $("#addNum"+this.value).val()
+			},
+        type: 'post',
+        success: function(result)
+        {
+           alert("Added!");
+        }
+    });
+}
+ 
+	
+	
+	
+	            $.getJSON(endpoint+"/catalog/products")
+                .done(function(products) {
+					buildHtmlTable(products);
+                });
+	</script>
+</head>
+<body>
+
+
+
+    <section class="section">
+        <div class="container">
+            <div class="text-content">
+			 <div id="ajaxContent">
+					<h2 class="headline">Product Information</h2>
+					<table id="excelDataTable" border="1">
+					  <tr>
+						<th>id</th>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Properties</th>
+						<th>Actions</th>
+					  </tr>
+					</table>
+				</div>
+				 <a href="cart.html" target="_blank">Go to cart</a> 
+            </div>
+        </div>
+        <!-- container text -->
+    </section>
+    <!-- #productData -->
+
+    
+</body>
+</html>

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "iPhone 11 pro",
+	"price":899,
+	"properties":{
+	"year": 2019,
+	"memory":"64gb"
+	}
+  },
+  {
+    "id": "2s",
+    "name": "Nokia 3310",
+	"price": 95,
+	"properties":{
+	"year":2001,
+	"screen":"monochrome"
+	}
+  }
+]
