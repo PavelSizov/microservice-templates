@@ -595,6 +595,13 @@
                     "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
                     "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
                     "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
+                    "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
+                    "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
+                    "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
+                    "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
+                    "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
+                    "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
+                    "c3cfca53-3737-43c6-8b00-4dec39ef56c3",
                     "c3cfca53-3737-43c6-8b00-4dec39ef56c3"
                 ]
             },
@@ -614,6 +621,13 @@
                     "3e3123f7-c2ba-4ba8-b472-28ffb68cb449"
                 ],
                 "iscontainedinside": [
+                    "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
+                    "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
+                    "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
+                    "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
+                    "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
+                    "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
+                    "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
                     "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
                     "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
                     "dbc22e4a-2b3c-4a44-94bd-1a5fc571ae09",
@@ -841,8 +855,8 @@
                     }
                 ],
                 "MinSize": "1",
-                "MaxSize": "1",
-                "DesiredCapacity": "1",
+                "MaxSize": "2",
+                "DesiredCapacity": "2",
                 "LaunchConfigurationName": {
                     "Ref": "LaunchConfig"
                 }
@@ -916,7 +930,7 @@
                     "MaximumPercent": 200,
                     "MinimumHealthyPercent": 100
                 },
-                "DesiredCount": 1,
+                "DesiredCount": 2,
                 "TaskDefinition": {
                     "Ref": "taskdiscount"
                 },
@@ -1549,6 +1563,7 @@
             "Properties": {
                 "AllocatedStorage": "20",
                 "AvailabilityZone": "eu-central-1b",
+                "BackupRetentionPeriod": "0",
                 "DBInstanceClass": "db.t2.micro",
                 "DBInstanceIdentifier": "mydbinstance2",
                 "DBSnapshotIdentifier": "arn:aws:rds:eu-central-1:217276149235:snapshot:mydb-snapshot-1",
@@ -1562,7 +1577,7 @@
                 "OptionGroupName": "default:postgres-11",
                 "Port": "5432",
                 "PubliclyAccessible": true,
-                "StorageType": "standard",
+                "StorageType": "gp2",
                 "VPCSecurityGroups": [
                     "sg-07df8651530c869f0"
                 ]
