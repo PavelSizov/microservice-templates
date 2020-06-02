@@ -75,6 +75,7 @@ function ClickRemove() {
 	    <script type="text/javascript">
         $("document").ready(function() {
             $("#checkout").click(checkout);
+			$("#checkCode").click(checkCodeFn);
         });
         
         function checkout() {
@@ -92,6 +93,26 @@ function ClickRemove() {
         },
 		error: function (request, status, error) { // error callback 
 			alert("Error: " + JSON.parse(request.responseText).message);
+		}
+    });
+        };
+		
+		function checkCodeFn() {
+            $.ajax({ 
+        url: endpoint+'/promocode/'+$("#promocode").val(),
+        type: 'get',
+        success: function(result)
+        {
+			var discount=parseFloat(result);
+			if (discount>0){
+				alert("Promocode is valid. Discount: "+discount);
+		   }
+		   else{
+			alert("No such promocode");
+		   }
+        },
+		error: function (request, status, error) { // error callback 
+			alert("Failed to get promocode");
 		}
     });
         }
@@ -116,7 +137,10 @@ function ClickRemove() {
 					</table>
 				</div>
 				
-				<p><label for="promocode">Promocode:</label> <input type="text" id="promocode" name="promocode"></p>
+				<p>
+				<label for="promocode">Promocode:</label> <input type="text" id="promocode" name="promocode"> 
+				<button id="checkCode">CheckPromocode</button>
+				</p>
 				<p><label for="email">Email:</label> <input type="text" id="email" name="email"></p>
 				<p> <button id="checkout">Checkout</button></p>	
 				
